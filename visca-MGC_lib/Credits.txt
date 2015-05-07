@@ -1,0 +1,10 @@
+Serial Port Library (Freeware)
+
+  - Thierry Schneider
+    thierry@tetraedre.com
+
+
+VISCA CONSTANTS - LIBVISCA (LGPL)
+  - Damien Douxchamps 
+    ddouxchamps@users.sourceforge.net
+

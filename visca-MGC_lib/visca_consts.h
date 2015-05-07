@@ -130,6 +130,16 @@ typedef struct VISCA_DEV_CAPS {
 #define VISCA_TILT_DRIVE_HOME	0x04 // Drive to home position
 #define VISCA_TILT_DRIVE_RESET	0x05 // Reset tilt drive
 
+// TEST
+#define TEST_VISCA_06			0x06 
+#define TEST_VISCA_01			0x01
+#define TEST_VISCA_PAN_SLOW		0x08
+#define TEST_VISCA_TILT_SLOW	0x08
+#define TEST_VISCA_03			0x03
+
+
+#define VISCA_TILT_DRIVE_RESET	0x05 // Reset tilt drive
+
 // Pan/Tilt general constants
 #define VISCA_SPEED_TILT_MAX	0x14 // Max tilt speed
 #define VISCA_SPEED_PAN_MAX		0x18 // Max pan speed

@@ -177,6 +177,7 @@ namespace visca_cam
 
 		// Pan/Tilt functions
 		bool VISCA_Cam::set_pt_home(int camera);
+		bool VISCA_Cam::go_up(int camera);
 		bool VISCA_Cam::set_pt_relative(int pan, int tilt, int pan_speed, int tilt_speed, int camera);
 
 		// Packet and serial stuff

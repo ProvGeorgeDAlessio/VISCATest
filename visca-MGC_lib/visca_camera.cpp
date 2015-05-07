@@ -699,7 +699,8 @@ bool VISCA_Cam::queue_packet()
 	char pkt_byte;
 	int len;
 	int cnt;
-
+	 
+	
 	if (packet == NULL) return false;
 
 	pkt_txt = (char *) packet->get_Packet();
@@ -718,7 +719,6 @@ bool VISCA_Cam::queue_packet()
 	this->pkts_waiting++;
 	return true;
 }
-
 void VISCA_Cam::process_inquiry()
 {
   #ifdef debpkts
@@ -1372,6 +1372,41 @@ bool VISCA_Cam::set_pt_home(int camera)
 		return true;
 	}
 	else
+	{
+		return false;
+	}
+}
+bool VISCA_Cam::go_up(int camera)
+{
+	// Pan is a integer value from 100 through -100
+	// test
+	cam_pan_tilt = true;
+	if ((cam_pan_tilt) && (!errCode) && (pkt_queueing == false)) 
+	{
+		/* make package */
+		unsigned char cm = VISCA_TILT_DRIVE_REL;	// use the relative position method
+		unsigned char tm = VISCA_TERMINATOR;		// stop bit
+		
+		unsigned char c06 = TEST_VISCA_06;
+		unsigned char c01 = TEST_VISCA_01;
+		unsigned char pans = TEST_VISCA_PAN_SLOW;
+		unsigned char tslow = TEST_VISCA_TILT_SLOW;
+		unsigned char c03 = TEST_VISCA_03;
+
+		command_header_tilt(camera);
+		
+		packet->NextByte(&c01);
+		packet->NextByte(&pans);
+		packet->NextByte(&tslow);
+		packet->NextByte(&c03);
+		packet->NextByte(&c01);
+		packet->NextByte(&tm);
+
+		// Write packet to queue
+		queue_packet();
+		return true;
+	}
+	else	// com object doesn't exist.  Can't talk to camera - return a failure.
 	{
 		return false;
 	}

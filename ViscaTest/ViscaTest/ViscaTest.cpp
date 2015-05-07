@@ -19,21 +19,37 @@ unsigned long idStatThread = NULL;
 int _tmain(int argc, _TCHAR* argv[])
 
 {
+	int comPort = 7;
+	if (argc > 1) {
+		comPort = _ttoi(argv[1]);
+	}
+
 	DWORD result;
 	bool xx;
 	int zoomlevel = 0;
 	int irmode = 0;
 	int cammod = 0;
-
+	string input;
 	VISCA_Timer2 *tm1 = new VISCA_Timer2;
-
+	VISCA_Cam * Cam1 = 0;
+	
 	// Get the timer going for packets
 	tm1->Setup();
-
+	
+	
 	// First, create the cam objects, and set them to the appropriate ports.
-	// NOTE: Speed/parity/etc are defaulted to 9600/8/N/1 in constructor
-
-	VISCA_Cam * Cam1 = new VISCA_Cam("COM7", 1, 1, result);
+	// NOTE: Speed/parity/etc are defaulted to 9600/8/N/1 inconstructor
+	
+	if (comPort == 5) {
+		Cam1 = new VISCA_Cam("COM5", 1, 1, result);
+	}
+	if (comPort == 7) {
+		Cam1 = new VISCA_Cam("COM7", 1, 1, result);
+	}
+	if (comPort == 4) {
+		Cam1 = new VISCA_Cam("COM4", 1, 1, result);
+	}
+	 
 	
 
 	// If cams exist then get them going.
@@ -67,7 +83,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		while (zoomlevel >= 0)
 		{
-			cout << "\nEnter Zoom (0 - 16384),\n OR -2 for WB, -3 for SLOW, -4 for IR, or -1 to quit): ";
+			cout << "\nEnter Zoom (0 - 16384),\n OR -2 for WB, -3 for SLOW, 10 to turn the camera off, 11 to turn the camera on, -4 for IR, or -1 to quit): ";
+			cout << "\nEnter 1 (Left), 2(Right), 3(Up), 4(Down)";
 			std::cin >> zoomlevel;
 
 			if (zoomlevel == -3)
@@ -105,6 +122,26 @@ int _tmain(int argc, _TCHAR* argv[])
 					
 					irmode = 0;
 				}
+			}
+			if (zoomlevel == 10)
+			{
+				Cam1->power_off(1);
+			}
+			if (zoomlevel == 11)
+			{
+				Cam1->power_on(1);
+			}
+			if (zoomlevel == 1)
+			{
+				Cam1->set_pt_relative(50, 15, 10, 10, 1);
+			}
+			if (zoomlevel == 2)
+			{
+				Cam1->set_pt_relative(1046216, 63176, 10, 10, 1);
+			}
+			if (zoomlevel == 3) 
+			{
+				Cam1->go_up(1);
 			}
 		}
 
